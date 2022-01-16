@@ -15,24 +15,30 @@ def inserir():
         aux = '' # aux para concatenar as informações
         for i in range(len(dados)): #para ir pedindo cada dado e concatenando 
             dado = input(f'Informe o/a {dados[i]}: ') #dedindo o dado
-            aux = aux + ';' + dado #concatenando
+            aux = aux + dado + ';' #concatenando
         banco_contatos.append(aux) #colocando na lista
     else: # caso não seja o primeiro contato add na agenda
         aux = '' # aux para concatenar as informações
-        for i in range(len(dados)):
+        i = 0
+        while i != len(dados):
             dado = input(f'Informe o/a {dados[i]}: ')
             if i == 0: # se for o primeiro dado(cpf) conferir se é repetido
+                rep = 0 # variavel que vai informar se tem cpf repetido
                 for j in range(len(banco_contatos)): # conferir de todos os contados exitentes
                     conf_cpf = banco_contatos[j].split(';') #transforma os dados em lista
-                    if dado == conf_cpf[0]: # confere se o cpf do novo contato é igual a algum exixtente no banco de contatos
+                    if dado == conf_cpf[0]: # confere se o cpf do novo contato é igual a algum existente no banco de contatos
                         print('CPF repetido!')
+                        rep = 1 # informa q o cpf ta repetido
                         break
                     else:
-                        aux = aux + ';' + dado
+                        aux = aux + dado + ';' #concatenando
             else:
-                aux = aux + ';' + dado
-        banco_contatos.append(aux)
-    salvar(aux)
+                aux = aux + dado + ';' #concatenando
+            if rep == 1: # se o cpf estiver repetido não será perguntado os proximos dados
+                break
+            i = i+ 1
+        banco_contatos.append(aux) # armazena os dados na na lista
+    salvar(aux) # salva os dados na csv
     return None
 
 
@@ -74,7 +80,7 @@ def deletar_contato_por_email(email):
 
 def salvar(dado):
     arq = open('./agenda.csv', 'a+')
-    arq.write(dado)
-    arq.close
+    arq.write(dado + '\n') # escreve os dados e dá uma quebra de linha
+    arq.close # fecha o arquivo
     return None
 
