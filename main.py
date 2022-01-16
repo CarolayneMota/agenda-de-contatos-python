@@ -31,5 +31,4 @@ while True:
         email = input('Informe o email que quer deletar: ')
         banco.deletar_contato_por_email(email)
     elif escolha == 11:
-        banco.salvar()
         break
