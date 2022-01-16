@@ -1,3 +1,15 @@
+import csv
+global banco_contatos
+banco_contatos = []
+
+arq = open('./agenda.csv', 'a+')
+banco_contatos = arq.readlines()
+arq.close
+
+print(banco_contatos)
+
+
+ag = open("demofile.txt", "r")
 def inserir():
     # cpf, nome, sobrenome, email, telefone, curso,
     # data_nasc, observacao
