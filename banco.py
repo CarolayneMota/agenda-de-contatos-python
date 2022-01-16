@@ -8,6 +8,10 @@ def atualizar_contato():
     return None
 
 
+def mostrar_lista():
+    return None
+
+
 def buscar_contato_por_cpf(cpf):
     return None
 
@@ -34,3 +38,8 @@ def deletar_contato_por_cpf(cpf):
 
 def deletar_contato_por_email(email):
     return None
+
+
+def salvar():
+    return None
+
