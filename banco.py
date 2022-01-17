@@ -1,6 +1,4 @@
 import csv
-from operator import le
-from subprocess import DETACHED_PROCESS
 global banco_contatos
 banco_contatos = []
 
@@ -127,14 +125,31 @@ def buscar_contato_por_curso(curso):
 
 
 def quantidade_de_contatos():
-    return None
+    qtd_pessoas = len(banco_contatos)
+    return f'A quantidade de contatos cadastrados são {qtd_pessoas}'
 
 
 def deletar_contato_por_cpf(cpf):
+    """
+        Crie uma função deletar contato por cpf que recebe como parâmetro
+    o cpf de um contato e o elimina da lista.
+    i. Antes de deletar o contato da lista verifique se o mesmo existe
+    na lista.
+    ii. Após deletar o contato salve o arquivo de agenda.csv com a
+    função salvar()
+    """
     return None
 
 
 def deletar_contato_por_email(email):
+    """
+        Crie uma função deletar contato por email que recebe como
+    parâmetro o email de um contato e o elimina da lista.
+    i. Antes de deletar o contato da lista verifique se o mesmo existe
+    na lista.
+    ii. Após deletar o contato salve o arquivo de agenda.csv com a
+    função salvar()
+    """
     return None
 
 

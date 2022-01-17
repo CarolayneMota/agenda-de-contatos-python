@@ -24,7 +24,7 @@ while True:
         curso = input('Informe o curso que quer buscar: ')
         banco.buscar_contato_por_curso(curso)
     elif escolha == 8:
-        banco.quantidade_de_contatos()
+        print(banco.quantidade_de_contatos())
     elif escolha == 9:
         cpf = int(input('Informe o cpf que quer deletar: '))
         banco.deletar_contato_por_cpf(cpf)
