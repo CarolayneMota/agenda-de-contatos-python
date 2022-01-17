@@ -7,7 +7,8 @@ while True:
     if escolha == 1:
         banco.inserir()
     elif escolha == 2:
-        banco.atualizar_contato()
+        cpf = int(input('Informe o cpf que quer atualizar: '))
+        banco.atualizar_contato(cpf)
     elif escolha == 3:
         banco.mostrar_lista()
     elif escolha == 4:
