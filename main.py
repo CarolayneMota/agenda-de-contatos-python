@@ -7,12 +7,12 @@ while True:
     if escolha == 1:
         banco.inserir()
     elif escolha == 2:
-        cpf = int(input('Informe o cpf que quer atualizar: '))
+        cpf = input('Informe o cpf que quer atualizar: ')
         banco.atualizar_contato(cpf)
     elif escolha == 3:
         banco.mostrar_lista()
     elif escolha == 4:
-        cpf = int(input('Informe o cpf que quer buscar: '))
+        cpf = input('Informe o cpf que quer buscar: ')
         banco.buscar_contato_por_cpf(cpf)
     elif escolha == 5:
         email = input('Informe o email que quer buscar: ')

@@ -70,23 +70,59 @@ def mostrar_lista():
     print('\tLista de contatos:')
     for i in range(len(banco_contatos)):
         dados = banco_contatos[i].split(';')
-        print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]} ,data de nascimento: {dados[6]} ,observação: {dados[7]}{dados[8]}')
+        print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
     return None
 
 
 def buscar_contato_por_cpf(cpf):
+    dados = ''
+    for i in range(len(banco_contatos)):
+        dados = banco_contatos[i].split(';')
+        if cpf == dados[0]: # verifica se o cpf informado é igual a algum que já está contido no banco_contatos
+            print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
+            break # Encerra pq não existe cpf iguais logo só há uma pessoa 
+        else:
+            print('Contato não cadastrado')
     return None
 
 
 def buscar_contato_por_email(email):
+    dados = ''
+    for i in range(len(banco_contatos)):
+        dados = banco_contatos[i].split(';')
+        if email == dados[3]: # verifica se o email informado é igual a algum que já está contido no banco_contatos
+            print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
+            break # Encerra pq não existe email iguais logo só há uma pessoa 
+        else:
+            print('Contato não cadastrado')
     return None
 
 
 def buscar_contato_por_nome(nome):
+    dados = ''
+    N_cad = 0 # N_cad(não cadastrada): variavel que é responsavel em informa se não tem o contato cadastrado
+    for i in range(len(banco_contatos)):
+        dados = banco_contatos[i].split(';')
+        if nome.lower() == dados[1].lower():
+            print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
+        else:
+            N_cad += 1 
+    if N_cad == len(banco_contatos): # se N_cad for igual ao números de pessoas no banco_contatos quer dizer q não existe uma pessoa com o nome informado para busca
+        print('Contato não cadastrado')
     return None
 
 
 def buscar_contato_por_curso(curso):
+    dados = ''
+    N_cad = 0 # N_cad(não cadastrada): variavel que é responsavel em informa se não tem o contato cadastrado
+    for i in range(len(banco_contatos)):
+        dados = banco_contatos[i].split(';')
+        if curso.lower() == dados[5].lower():
+            print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
+        else:
+            N_cad += 1 
+    if N_cad == len(banco_contatos): # se N_cad for igual ao números de pessoas no banco_contatos quer dizer q não existe uma pessoa com o nome informado para busca
+        print('Contato não cadastrado')
     return None
 
 
