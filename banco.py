@@ -1,4 +1,5 @@
 import csv
+import os
 global banco_contatos
 banco_contatos = []
 
@@ -138,6 +139,23 @@ def deletar_contato_por_cpf(cpf):
     ii. Após deletar o contato salve o arquivo de agenda.csv com a
     função salvar()
     """
+    dados = ''
+    for i in range(len(banco_contatos)):
+        dados = banco_contatos[i].split(';')
+        if cpf == dados[0]: # verifica se o cpf informado é igual a algum que já está contido no banco_contatos
+            banco_contatos.pop(i)
+            # deletar o arquivo e reescrever
+            """
+            if os.path.exists("demofile.txt"):
+                os.remove("demofile.txt")
+            else:
+                print("The file does not exist")
+                        """
+
+            salvar(banco_contatos)
+            break # Encerra pq não existe cpf iguais logo só há uma pessoa 
+        else:
+            print('Contato não cadastrado')
     return None
 
 
@@ -150,6 +168,14 @@ def deletar_contato_por_email(email):
     ii. Após deletar o contato salve o arquivo de agenda.csv com a
     função salvar()
     """
+    dados = ''
+    for i in range(len(banco_contatos)):
+        dados = banco_contatos[i].split(';')
+        if email == dados[3]: # verifica se o email informado é igual a algum que já está contido no banco_contatos
+           
+            break # Encerra pq não existe email iguais logo só há uma pessoa 
+        else:
+            print('Contato não cadastrado')
     return None
 
 
@@ -157,5 +183,6 @@ def salvar(dado):
     arq = open('./agenda.csv', 'a+')
     arq.write(dado) # escreve os dados 
     arq.close # fecha o arquivo
+
     return None
 
