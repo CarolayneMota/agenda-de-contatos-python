@@ -35,9 +35,8 @@ def inserir():
                         print('CPF repetido!')
                         rep = 1 # informa q o cpf ta repetido
                         break
-                    else:
-                        aux = aux + dado + ';' #concatenando
-            elif j == len(dados) - 1: # para colocar a quebra de linha
+                aux = aux + dado + ';' #concatenando
+            elif i == len(dados) - 1: # para colocar a quebra de linha
                 aux = aux + dado + ';' + '\n' #concatenando    
             else:
                 aux = aux + dado + ';' #concatenando
@@ -45,7 +44,6 @@ def inserir():
                 break
             i = i+ 1
         banco_contatos.append(aux) # armazena os dados na na lista
-    print(f'banco_contatos: {banco_contatos}')
     salvar(aux) # salva os dados na csv
     return None
 
@@ -61,6 +59,38 @@ def atualizar_contato(cpf):
     ii. Após atualizar o dado deve-se salvar(Use a função salvar()) o
     arquivo agenda.csv
     """
+    dados = ['cpf', 'nome', 'sobrenome', 'email', 'telefone', 'curso', 'data de nascimento', 'observação'] #para pedir as informações de forma pratica
+    dado = ''
+    rep = 0 # variavel que vai informar se o contato não está cadastrado
+    for i in range(len(banco_contatos)):
+        dado = banco_contatos[i].split(';')
+        if str(cpf) == str(dado[0]): # verifica se o cpf informado é igual a algum que já está contido no banco_contatos
+            banco_contatos.pop(i)
+            # deletar o arquivo e reescrever
+            if os.path.exists("./agenda.csv"):
+                arq = open('./agenda.csv', 'a+')
+                arq.close
+                os.remove("./agenda.csv") #exclui o arquivo 
+                # cria novo arquivo e escreve nele as informações dos outros contatos
+                for j in range(len(banco_contatos)):
+                    salvar(banco_contatos[j])
+                
+                # Para atualizar o cadastro
+                aux = '' # aux para concatenar as informações
+                i = 0
+                while i != len(dados):
+                    dado = input(f'Informe o/a {dados[i]}: ')
+                    if i == len(dados) - 1: # para colocar a quebra de linha
+                        aux = aux + dado + ';' + '\n' #concatenando    
+                    else:
+                        aux = aux + dado + ';' #concatenando
+                    i = i+ 1
+                banco_contatos.append(aux) # armazena os dados na na lista
+                salvar(aux) # salva os dados na csv
+        else:
+            rep = 1 # informa se o contato não está cadastrado
+    if rep == 1: # informa se o contato não está cadastrado
+        print('Contato não cadastrado')
     return None
 
 
@@ -69,7 +99,10 @@ def mostrar_lista():
     print('\tLista de contatos:')
     for i in range(len(banco_contatos)):
         dados = banco_contatos[i].split(';')
-        print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
+        print(dados)
+        dados.pop(8)
+        print(dados)
+        print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}')
     return None
 
 
@@ -86,14 +119,16 @@ def buscar_contato_por_cpf(cpf):
 
 
 def buscar_contato_por_email(email):
+    rep = 0 # variavel que vai informar se o contato não está cadastrado
     dados = ''
     for i in range(len(banco_contatos)):
         dados = banco_contatos[i].split(';')
         if email == dados[3]: # verifica se o email informado é igual a algum que já está contido no banco_contatos
             print(f'CPF: {dados[0]}, nome: {dados[1]}, sobrenome: {dados[2]}, email: {dados[3]}, telefone: {dados[4]}, curso: {dados[5]}, data de nascimento: {dados[6]}, observação: {dados[7]}{dados[8]}')
             break # Encerra pq não existe email iguais logo só há uma pessoa 
-        else:
-            print('Contato não cadastrado')
+        rep = 1 # informa se o contato não está cadastrado
+    if rep == 1: # informa se o contato não está cadastrado
+        print('Contato não cadastrado')
     return None
 
 
@@ -139,23 +174,24 @@ def deletar_contato_por_cpf(cpf):
     ii. Após deletar o contato salve o arquivo de agenda.csv com a
     função salvar()
     """
-    dados = ''
-    for i in range(len(banco_contatos)):
-        dados = banco_contatos[i].split(';')
-        if cpf == dados[0]: # verifica se o cpf informado é igual a algum que já está contido no banco_contatos
+    i = 0
+    rep = 0 # variavel que vai informar se o contato não está cadastrado
+    dado = ''
+    while i != len(banco_contatos):
+        dado = banco_contatos[i].split(';')
+        if str(cpf) == str(dado[0]): # verifica se o cpf informado é igual a algum que já está contido no banco_contatos
             banco_contatos.pop(i)
-            # deletar o arquivo e reescrever
-            """
-            if os.path.exists("demofile.txt"):
-                os.remove("demofile.txt")
-            else:
-                print("The file does not exist")
-                        """
-
-            salvar(banco_contatos)
-            break # Encerra pq não existe cpf iguais logo só há uma pessoa 
+            print(banco_contatos)
+            #  reescrever
+            with open('./agenda.csv', 'w') as f: 
+                for j in range(len(banco_contatos)):
+                    f.write(banco_contatos[j])
+            print('Excluido')
         else:
-            print('Contato não cadastrado')
+            rep += 1 # informa se o contato não está cadastrado
+        i +=1
+    if rep == len(banco_contatos): # informa se o contato não está cadastrado
+        print('Contato não cadastrado')
     return None
 
 
@@ -168,14 +204,23 @@ def deletar_contato_por_email(email):
     ii. Após deletar o contato salve o arquivo de agenda.csv com a
     função salvar()
     """
-    dados = ''
+    dado = ''
     for i in range(len(banco_contatos)):
-        dados = banco_contatos[i].split(';')
-        if email == dados[3]: # verifica se o email informado é igual a algum que já está contido no banco_contatos
-           
-            break # Encerra pq não existe email iguais logo só há uma pessoa 
+        dado = banco_contatos[i].split(';')
+        if email.lower() == dado[3].lower(): # verifica se o email informado é igual a algum que já está contido no banco_contatos
+            banco_contatos.pop(i)
+            # deletar o arquivo e reescrever
+            if os.path.exists("./agenda.csv"):
+                arq = open('./agenda.csv', 'a+')
+                arq.close
+                os.remove("./agenda.csv") #exclui o arquivo 
+                # cria novo arquivo e escreve nele 
+                for j in range(len(banco_contatos)):
+                    salvar(banco_contatos[j])
         else:
-            print('Contato não cadastrado')
+            rep = 1 # informa se o contato não está cadastrado
+    if rep == 1: # informa se o contato não está cadastrado
+        print('Contato não cadastrado')
     return None
 
 
@@ -185,4 +230,3 @@ def salvar(dado):
     arq.close # fecha o arquivo
 
     return None
-
